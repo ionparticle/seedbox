@@ -1,4 +1,51 @@
 body
 {
-	font-family: 'Open Sans', sans-serif;
+	font: normal 100% 'Open Sans', sans-serif;
+}
+
+div.section
+{
+	width: 30em;
+	margin: 0 auto;
+}
+
+div.section ul.infolist
+{
+	padding: 0;
+}
+
+div.section ul.infolist li 
+{
+	list-style: none;
+	display: inline;
+}
+
+div.section ul.infolist span
+{
+	width: 4em;
+	text-align: right;
+	margin-right: 0.5em;
+	display: inline-block;
+}
+
+div.section div.graph
+{
+	width: 100%;
+	display: inline-block;
+}
+
+div.section div.graph .right
+{
+	float: right;
+	text-align: right;
+}
+
+#storagebar.ui-progressbar
+{
+	background: honeydew;
+}
+
+#storagebar .ui-progressbar-value
+{
+	background: lightgreen;
 }

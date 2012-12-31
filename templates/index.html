@@ -1,4 +1,25 @@
 {% extends "layouts/default.html" %}
 {% block body %}
-<p>Hello World!</p>
+
+<div class='section'>
+	<h3>Storage Summary</h3>
+	<ul class='infolist'>
+		<li><span>Free:</span>{{ df.free }}</li>
+		<li><span>Used:</span>{{ df.used }}</li>
+		<li><span>Total:</span>{{ df.total }}</li>
+	</ul>
+	<div class='graph'>
+		<div id="storagebar"></div>
+		<script>
+			$("#storagebar").progressbar({ value: {{ df.pctused }} });
+		</script>
+		<span class='left'>{{ df.pctused }}% Used</span>
+		<span class='right'>{{ df.pctfree }}% Free</span>
+	</div>
+</div>
+
+<div class='section'>
+	<h3>Bandwidth Summary</h3>
+</div>
+
 {% endblock %}
