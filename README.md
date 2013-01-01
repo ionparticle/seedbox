@@ -2,6 +2,7 @@
 
 Quick project to get some stats from my seedbox. Also more of a technology testing platform for me to play with unfamiliar stuff. Linux only, tested on Ubuntu 12.04, meant for dedicated seedboxes that can be used as servers too.
 
+## Screenshot
 ![Screenshot](https://raw.github.com/ionparticle/seedbox/master/screenshot.png "Screenshot")
 
 ## Dependencies
