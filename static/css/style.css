@@ -9,6 +9,11 @@ div.section
 	margin: 0 auto;
 }
 
+div.section h3
+{
+	text-align: center;
+}
+
 div.section ul.infolist
 {
 	padding: 0;
