@@ -2,7 +2,7 @@
 {% block body %}
 
 <div class='section'>
-	<h3>Storage Summary</h3>
+	<h3>Storage</h3>
 	<ul class='infolist'>
 		<li><span>Free:</span>{{ df.free }}</li>
 		<li><span>Used:</span>{{ df.used }}</li>
@@ -19,7 +19,11 @@
 </div>
 
 <div class='section'>
-	<h3>Bandwidth Summary</h3>
+	<h3>Bandwidth</h3>
+	<img src='/img/vnstat/summary.png' />
+	<img src='/img/vnstat/hourly.png' />
+	<img src='/img/vnstat/daily.png' />
+	<img src='/img/vnstat/monthly.png' />
 </div>
 
 {% endblock %}

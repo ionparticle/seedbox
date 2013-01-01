@@ -1,13 +1,18 @@
 from __future__ import division # division by / yields float, // for integer div
 import os
+import subprocess
 from flask import Flask
 from flask import render_template
+from modules import VNStat
+from modules.Conv import scaleBytes
 
 # quick way of making sure that code changes get loaded immediately
 from uwsgidecorators import *
-filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
+#filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
+#filemon('/home/john/sites/seedbox/modules/VNStat.py')(uwsgi.reload)
 
 app = Flask(__name__)
+#app.debug = True
 
 @app.route('/')
 def index():
@@ -23,15 +28,7 @@ def index():
 	used = scaleBytes(used)
 
 	df.update({'total' : total, 'used' :  used, 'free' : free})
+	vnstat = VNStat.genVNStat()
 	return render_template('index.html', df=df)
 
-# Convert bytes into a more human readable format with units
-def scaleBytes(b):
-	units = ["B", "kB","MB","GB"]
-	for unit in units:
-		if b / 1024 < 1:
-			break
-		elif unit == "GB": # fix off by one error where 1 TB = 1 GB
-			break
-		b = b / 1024
-	return '%.2f %s' % (b, unit)
+
