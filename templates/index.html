@@ -20,10 +20,123 @@
 
 <div class='section'>
 	<h3>Bandwidth</h3>
+	<div class='colLeft'>
+		<h4>Today</h4>
+		<ul>
+			<li>Rx: {{ stats.days.0.rxs }}</li>
+			<li>Tx: {{ stats.days.0.txs }}</li>
+			<li>Total: {{ stats.days.0.totals }}</li>
+			<li>Avg: {{ stats.days.0.avgs }}</li>
+		</ul>
+		<canvas id="todayChart" width="100" height="100">
+			Your web-browser does not support the HTML 5 canvas element.
+		</canvas>
+	</div>
+	<div class='colRight'>
+		<h4>Yesterday</h4>
+		<ul>
+			<li>Rx: {{ stats.days.1.rxs }}</li>
+			<li>Tx: {{ stats.days.1.txs }}</li>
+			<li>Total: {{ stats.days.1.totals }} </li>
+			<li>Avg: {{ stats.days.1.avgs }}</li>
+		</ul>
+		<canvas id="yesterdayChart" width="100" height="100">
+			Your web-browser does not support the HTML 5 canvas element.
+		</canvas>
+	</div>
+	<div class='colLeft'>
+		<h4>This Month</h4>
+		<ul>
+			<li>Rx: {{ stats.months.0.rxs }}</li>
+			<li>Tx: {{ stats.months.0.txs }}</li>
+			<li>Total: {{ stats.months.0.totals }}</li>
+			<li>Avg: {{ stats.months.0.avgs }}</li>
+		</ul>
+		<canvas id="thisMonthChart" width="100" height="100">
+			Your web-browser does not support the HTML 5 canvas element.
+		</canvas>
+	</div>
+	<div class='colRight'>
+		<h4>Last Month</h4>
+		<ul>
+			<li>Rx: {{ stats.months.1.rxs }}</li>
+			<li>Tx: {{ stats.months.1.txs }}</li>
+			<li>Total: {{ stats.months.1.totals }} </li>
+			<li>Avg: {{ stats.months.1.avgs }}</li>
+		</ul>
+		<canvas id="lastMonthChart" width="100" height="100">
+			Your web-browser does not support the HTML 5 canvas element.
+		</canvas>
+	</div>
+	<h4>All Time</h4>
+	<ul class='infolist'>
+		<li><span>Rx:</span>{{ stats.total.trs }}</li>
+		<li><span>Tx:</span>{{ stats.total.tts }}</li>
+		<li><span>Total:</span>{{ stats.total.totals }}</li>
+	</ul>
+</div>
+
+<div class='section'>
 	<img src='/img/vnstat/summary.png' />
 	<img src='/img/vnstat/hourly.png' />
 	<img src='/img/vnstat/daily.png' />
 	<img src='/img/vnstat/monthly.png' />
 </div>
+
+<script type="application/javascript">
+function drawCharts()
+{
+	if(!!document.createElement('canvas').getContext)
+	{ // canvas element is supported
+		colors = ['#4ae371', '#ffd062']
+		// Today
+		var chart = new AwesomeChart('todayChart');
+		chart.data = {{ jsonStats.today|safe }};
+		chart.chartType = 'doughnut';
+		chart.colors = colors;
+		chart.pieShadowColor = 'rgba(0,0,0,0)';
+		chart.pieStrokeStyle = '#bbb';
+		chart.pieBorderWidth = 0.6;
+		chart.pieShadowOffsetX = 0;
+		chart.pieShadowBlur = 1;
+		chart.draw();
+		// Yesterday
+		chart = new AwesomeChart('yesterdayChart');
+		chart.data = {{ jsonStats.yesterday|safe }};
+		chart.chartType = 'doughnut';
+		chart.colors = colors;
+		chart.pieShadowColor = 'rgba(0,0,0,0)';
+		chart.pieStrokeStyle = '#bbb';
+		chart.pieBorderWidth = 0.6;
+		chart.pieShadowOffsetX = 0;
+		chart.pieShadowBlur = 1;
+		chart.draw();
+		// This Month
+		chart = new AwesomeChart('thisMonthChart');
+		chart.data = {{ jsonStats.thisMonth|safe }};
+		chart.chartType = 'doughnut';
+		chart.colors = colors;
+		chart.pieShadowColor = 'rgba(0,0,0,0)';
+		chart.pieStrokeStyle = '#bbb';
+		chart.pieBorderWidth = 0.6;
+		chart.pieShadowOffsetX = 0;
+		chart.pieShadowBlur = 1;
+		chart.draw();
+		// Last Month
+		chart = new AwesomeChart('lastMonthChart');
+		chart.data = {{ jsonStats.lastMonth|safe }};
+		chart.chartType = 'doughnut';
+		chart.colors = colors;
+		chart.pieShadowColor = 'rgba(0,0,0,0)';
+		chart.pieStrokeStyle = '#bbb';
+		chart.pieBorderWidth = 0.6;
+		chart.pieShadowOffsetX = 0;
+		chart.pieShadowBlur = 1;
+		chart.draw();
+	}
+}
+
+window.onload = drawCharts;
+</script>
 
 {% endblock %}

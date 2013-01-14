@@ -5,14 +5,15 @@ from flask import Flask
 from flask import render_template
 from modules import VNStat
 from modules.Conv import scaleBytes
+import json
 
 # quick way of making sure that code changes get loaded immediately
 from uwsgidecorators import *
-#filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
-#filemon('/home/john/sites/seedbox/modules/VNStat.py')(uwsgi.reload)
+filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
+filemon('/home/john/sites/seedbox/modules/VNStat.py')(uwsgi.reload)
 
 app = Flask(__name__)
-#app.debug = True
+app.debug = True
 
 @app.route('/')
 def index():
@@ -29,6 +30,26 @@ def index():
 
 	df.update({'total' : total, 'used' :  used, 'free' : free})
 	vnstat = VNStat.genVNStat()
-	return render_template('index.html', df=df)
+	stats = VNStat.parseVNStat()
+	jsonStats = statToJson(stats)
+	return render_template('index.html', df=df, stats=stats, 
+			jsonStats = jsonStats)
 
+def statToJson(stats):
+	ret = {}
+	rx = int(stats['days'][0]['rx'])
+	tx = int(stats['days'][0]['tx'])
+	ret['today'] = json.dumps([rx, tx])
 
+	rx = int(stats['days'][1]['rx'])
+	tx = int(stats['days'][1]['tx'])
+	ret['yesterday'] = json.dumps([rx, tx])
+
+	rx = int(stats['months'][0]['rx'])
+	tx = int(stats['months'][0]['tx'])
+	ret['thisMonth'] = json.dumps([rx, tx])
+
+	rx = int(stats['months'][1]['rx'])
+	tx = int(stats['months'][1]['tx'])
+	ret['lastMonth'] = json.dumps([rx, tx])
+	return ret

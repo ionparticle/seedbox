@@ -10,6 +10,7 @@ Quick project to get some stats from my seedbox. Also more of a technology testi
 * [vnstat/vnstati](http://humdi.net/vnstat/): Logs network bandwidth usage, persistant across reboots.
 
 ## Stack
+
 * Web app framework: [Flask](http://flask.pocoo.org/)
 * Templating engine: [Jinja 2](http://jinja.pocoo.org/)
 * Application server: [uWSGI](http://projects.unbit.it/uwsgi/)
@@ -21,6 +22,7 @@ Configured so that nginx serves static content, uWSGI serves up dynamic content.
 
 Disk space usage is assumed to be however much space is left on /home
 
-## Misc
+## Other Credits
 
-WooFunction icons: http://www.woothemes.com/2009/09/woofunction-178-amazing-web-design-icons/
+* [AwesomeChartJS](http://cyberpython.github.com/AwesomeChartJS/): Nice and simple chart library
+* Favicon from [WooFunction iconset](http://www.woothemes.com/2009/09/woofunction-178-amazing-web-design-icons/)

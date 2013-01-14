@@ -1,6 +1,11 @@
+from __future__ import division # force floating point division for /
+
 # Convert bytes into a more human readable format with units
-def scaleBytes(b):
+def scaleBytes(b, start = "B"):
+	b = float(b)
 	units = ["B", "kB","MB","GB"]
+	i = units.index(start)
+	units = units[i:]
 	for unit in units:
 		if b / 1024 < 1:
 			break

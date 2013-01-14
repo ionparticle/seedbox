@@ -45,6 +45,46 @@ div.section div.graph .right
 	text-align: right;
 }
 
+div.section .colLeft
+{
+	display: inline-block;
+	width: 49%;
+}
+
+div.section .colLeft ul, div.section .colRight ul
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+}
+
+div.section .colLeft canvas, div.section .colRight canvas
+{
+	float: right;
+}
+
+div.section h4
+{
+	text-align: center;
+	margin: 0;
+	padding-top: 0.5em;
+}
+
+div.section .colLeft h4, div.section .colRight h4
+{
+	text-align: center;
+	margin: 0;
+	padding-bottom: 1em;
+}
+
+div.section .colRight
+{
+	display: inline-block;
+	float: right;
+	width: 49%;
+}
+
 #storagebar.ui-progressbar
 {
 	background: honeydew;
@@ -52,5 +92,5 @@ div.section div.graph .right
 
 #storagebar .ui-progressbar-value
 {
-	background: lightgreen;
+	background: #4ae371;
 }
