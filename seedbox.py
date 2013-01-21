@@ -8,12 +8,12 @@ from modules.Conv import scaleBytes
 import json
 
 # quick way of making sure that code changes get loaded immediately
-from uwsgidecorators import *
-filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
-filemon('/home/john/sites/seedbox/modules/VNStat.py')(uwsgi.reload)
+#from uwsgidecorators import *
+#filemon('/home/john/sites/seedbox/seedbox.py')(uwsgi.reload)
+#filemon('/home/john/sites/seedbox/modules/VNStat.py')(uwsgi.reload)
 
 app = Flask(__name__)
-app.debug = True
+#app.debug = True
 
 @app.route('/')
 def index():
@@ -29,7 +29,6 @@ def index():
 	used = scaleBytes(used)
 
 	df.update({'total' : total, 'used' :  used, 'free' : free})
-	vnstat = VNStat.genVNStat()
 	stats = VNStat.parseVNStat()
 	jsonStats = statToJson(stats)
 	return render_template('index.html', df=df, stats=stats, 
@@ -52,4 +51,5 @@ def statToJson(stats):
 	rx = int(stats['months'][1]['rx'])
 	tx = int(stats['months'][1]['tx'])
 	ret['lastMonth'] = json.dumps([rx, tx])
+
 	return ret

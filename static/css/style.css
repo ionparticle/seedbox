@@ -94,3 +94,30 @@ div.section .colRight
 {
 	background: #4ae371;
 }
+
+.section ul.legend
+{
+	margin: 1em auto;
+	width: 30em;
+	padding: 0;
+}
+
+.section .legend li
+{
+	width: 9.8em;
+	padding: 0.1em 0;
+	margin: 0;
+	text-align: center;
+	list-style: none;
+	display: inline-block;
+}
+
+.section .rx
+{
+	background: #4ae371;
+}
+
+.section .tx
+{
+	background: #ffee00;
+}

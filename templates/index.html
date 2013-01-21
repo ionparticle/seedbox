@@ -68,19 +68,12 @@
 			Your web-browser does not support the HTML 5 canvas element.
 		</canvas>
 	</div>
-	<h4>All Time</h4>
-	<ul class='infolist'>
-		<li><span>Rx:</span>{{ stats.total.trs }}</li>
-		<li><span>Tx:</span>{{ stats.total.tts }}</li>
-		<li><span>Total:</span>{{ stats.total.totals }}</li>
+	<h4>All Time Since {{stats.total.create}}</h4>
+	<ul class='legend'>
+		<li class='rx'><span>Rx:</span> {{ stats.total.trs }}</li>
+		<li><span>Total:</span> {{ stats.total.totals }}</li>
+		<li class='tx'><span>Tx:</span> {{ stats.total.tts }}</li>
 	</ul>
-</div>
-
-<div class='section'>
-	<img src='/img/vnstat/summary.png' />
-	<img src='/img/vnstat/hourly.png' />
-	<img src='/img/vnstat/daily.png' />
-	<img src='/img/vnstat/monthly.png' />
 </div>
 
 <script type="application/javascript">
@@ -88,7 +81,7 @@ function drawCharts()
 {
 	if(!!document.createElement('canvas').getContext)
 	{ // canvas element is supported
-		colors = ['#4ae371', '#ffd062']
+		colors = ['#4ae371', '#ffee00'];
 		// Today
 		var chart = new AwesomeChart('todayChart');
 		chart.data = {{ jsonStats.today|safe }};

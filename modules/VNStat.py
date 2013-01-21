@@ -23,8 +23,10 @@ def parseVNStat():
 	hourLines = lines[65:89]
 	dayLines = lines[13:43]
 	monthLines = lines[43:55]
-	tr = int(getVal(lines[6]))
-	tt = int(getVal(lines[7]))
+	trk = int(getVal(lines[10])) / 1024
+	ttk = int(getVal(lines[11])) / 1024
+	tr = int(getVal(lines[6])) + trk
+	tt = int(getVal(lines[7])) + ttk
 	createDate = int(getVal(lines[4]))
 	ttl = tr + tt
 	total = {'tr': tr, 'tt': tt, 'trs': scaleBytes(tr, 'MB'), 'total': ttl,
