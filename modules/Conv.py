@@ -3,7 +3,7 @@ from __future__ import division # force floating point division for /
 # Convert bytes into a more human readable format with units
 def scaleBytes(b, start = "B"):
 	b = float(b)
-	units = ["B", "kB","MB","GB"]
+	units = ["B", "kB","MB","GB","TB"]
 	i = units.index(start)
 	units = units[i:]
 	for unit in units:
