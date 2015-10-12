@@ -22,7 +22,7 @@ DELUGE_WEB_CONF=/home/$USER/.config/deluge/web.conf
 DELUGE_HOSTLIST_CONF=/home/$USER/.config/deluge/hostlist.conf.1.2
 
 # number of seconds to wait before timing out for deluge config file creation
-TIMEOUT=10
+TIMEOUT=60
 
 if [ ! $# -eq 1 ]; then
 	echo "Error: Required argument <user> missing"
@@ -75,7 +75,7 @@ sudo service $DELUGE_WEB_SERVICE start || \
 CLEANUP="sudo service $DELUGE_WEB_SERVICE stop; $CLEANUP"
 
 # Can't kill it immediately or no files will be generated
-sleep $TIMEOUT 
+sleep 10
 
 # Stop services so it'll write out the config files
 sudo service $DELUGE_WEB_SERVICE stop || \
@@ -84,7 +84,7 @@ sudo service $DELUGED_SERVICE stop || \
 	{ echo >&2 "Error stopping deluged."; eval $CLEANUP; exit 1; }
 
 WAITED=0
-while [ ! -e $DELUGE_CORE_CONF -o ! -e $DELUGE_WEB_CONF ]; do
+while sudo test ! -e $DELUGE_CORE_CONF || sudo test ! -e $DELUGE_WEB_CONF; do
 	sleep 1
 	WAITED=$((WAITED+1))
 	if [ $WAITED -eq $TIMEOUT ]; then
