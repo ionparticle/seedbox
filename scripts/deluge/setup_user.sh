@@ -43,7 +43,7 @@ command -v nc >/dev/null 2>&1 || \
 	{ echo >&2 "Error, netcat not installed."; exit 1; }
 
 
-printf "Setting up a personal deluge environment for $USER\n"
+echo "Setting up a personal deluge environment for $USER"
 
 # Create upstart conf files from template
 cp $DELUGED_TEMPLATE $DELUGED_CONF_TMP || \
@@ -110,7 +110,7 @@ random_port()
 random_port
 sudo sed -i "s/\"daemon_port\": .*,/\"daemon_port\": $PORT,/" \
 	$DELUGE_CORE_CONF || \
-	{ echo >&2 "Error editing deluge core conf."; eval $CLEANUP; exit 1; }
+	{ echo >&2 "Error editing deluge daemon port."; eval $CLEANUP; exit 1; }
 # let deluge-web know about this daemon
 sudo cp $DELUGE_HOSTLIST_TEMPLATE $DELUGE_HOSTLIST_CONF || \
 	{ echo >&2 "Error copying deluge hostlist."; eval $CLEANUP; exit 1; }
@@ -129,6 +129,17 @@ sudo sed -i \
 random_port
 sudo sed -i -r "s/(\"port\": )([0-9]+)(.*)/\1$PORT\3/" $DELUGE_WEB_CONF || \
 	{ echo >&2 "Error editing deluge web conf."; eval $CLEANUP; exit 1; }
+# configure download directories
+sudo sed -i "s|\"download_location\": .*,|\"download_location\": \"/home/$USER/torrents/incomplete\",|" \
+	$DELUGE_CORE_CONF || \
+	{ echo >&2 "Error editing deluge download path."; eval $CLEANUP; exit 1;}
+sudo sed -i "s|\"move_completed_path\": .*,|\"move_completed_path\": \"/home/$USER/torrents/complete\",|" \
+	$DELUGE_CORE_CONF || \
+	{ echo >&2 "Error editing deluge completed path."; eval $CLEANUP; exit 1;}
+sudo sed -i "s/\"move_completed\": false/\"move_completed\": true/" \
+	$DELUGE_CORE_CONF || \
+	{ echo >&2 "Error editing deluge move completed."; eval $CLEANUP; exit 1;}
+
 
 # Restart services with the new conf
 sudo service $DELUGED_SERVICE start || \
