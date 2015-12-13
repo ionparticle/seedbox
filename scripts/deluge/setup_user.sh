@@ -55,7 +55,9 @@ cp $DELUGE_WEB_TEMPLATE $DELUGE_WEB_CONF_TMP || \
 	{ echo >&2 "Error copying deluge web template."; eval $CLEANUP; exit 1; }
 CLEANUP="$CLEANUP; rm $DELUGE_WEB_CONF_TMP"
 sed -i "s/<user>/$USER/g" $DELUGE_WEB_CONF_TMP || \
-	{ echo >&2 "Error editing deluged conf."; eval $CLEANUP; exit 1; }
+	{ echo >&2 "Error editing deluge web conf user."; eval $CLEANUP; exit 1; }
+sed -i "s/<deluged>/$DELUGED_SERVICE/g" $DELUGE_WEB_CONF_TMP || \
+	{ echo >&2 "Error editing deluge web conf deluged.";eval $CLEANUP;exit 1;}
 
 # Copy upstart conf to init
 sudo cp $DELUGED_CONF_TMP $DELUGED_CONF_INIT || \
@@ -70,9 +72,6 @@ echo "Waiting for deluge configuration files to be created."
 sudo service $DELUGED_SERVICE start || \
 	{ echo >&2 "Error starting deluged."; eval $CLEANUP; exit 1; }
 CLEANUP="sudo service $DELUGED_SERVICE stop; $CLEANUP"
-sudo service $DELUGE_WEB_SERVICE start || \
-	{ echo >&2 "Error starting deluge-web."; eval $CLEANUP; exit 1; }
-CLEANUP="sudo service $DELUGE_WEB_SERVICE stop; $CLEANUP"
 
 # Can't kill it immediately or no files will be generated
 sleep 10
@@ -144,8 +143,6 @@ sudo sed -i "s/\"move_completed\": false/\"move_completed\": true/" \
 # Restart services with the new conf
 sudo service $DELUGED_SERVICE start || \
 	{ echo >&2 "Error starting deluged after conf."; eval $CLEANUP; exit 1; }
-sudo service $DELUGE_WEB_SERVICE start || \
-	{ echo >&2 "Error starting deluge-web after conf."; eval $CLEANUP; exit 1; }
 
 echo "Done! You can now access the web client at port $PORT"
 
