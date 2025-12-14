@@ -1,0 +1,14 @@
+services:
+  caddy:
+    image: caddy
+    restart: unless-stopped
+    ports:
+      - "2000:80"
+    volumes:
+      - ./caddy/conf:/etc/caddy
+      - caddyConfig:/config
+      - caddyData:/data
+
+volumes:
+  caddyConfig:
+  caddyData:
